@@ -5,7 +5,10 @@ def Build(buildType,buildShell){
      
      println("当前要选择的构建类型 ${buildType}")
      buildHome = tool buildTools[buildType]
-     
-     sh "${buildHome}/bin/${buildType}  ${buildShell}"
+     if ("${buildType}" == "npm"){
+          sh "export NODE_HOME=${buildHome} && export PATH=\$NODE_HOME/bin:\$PATH && ${buildHome}/bin/npm ${buildShell}"
+     } else {
+         sh "${buildHome}/bin/${buildType}  ${buildShell}"
+     }
 
 }
